@@ -1,4 +1,4 @@
-import {uploadSingleImage} from '../middleware/upload.js'
+import {uploadSingleImage} from '../middleware/upload.js';
 import modelProducts from '../models/modelProducts.js';
 import fs from 'fs';
 import path from 'path';
@@ -136,6 +136,39 @@ updateProduct: async (sol, res) => {
         });
     }
 },
+
+deleteProduct : async (sol, res)=>{
+    try {
+        const productDelete = await modelProducts.findByIdAndDelete(sol.params.id);
+
+        if(!productDelete){
+            res.json({
+            result: 'mistake',
+            message: 'Product not found',
+            data:null,
+        });
+        }
+        if(productDelete.imagen){
+            const rutaImagen = path.join('imagenes', productDelete.imagen);
+
+            if(fs.existsSync(rutaImagen)){
+                fs.unlinkSync(rutaImagen);
+            }
+        }
+        res.json({
+            result: 'fine',
+            message: 'Product deleted successfully',
+            data:productDelete._id,
+        });
+
+    } catch (error) {
+        res.json({
+            result: 'mistake',
+            message: 'An error occurred deleting the product',
+            data:error,
+        });
+    }
+}
 
 }
 

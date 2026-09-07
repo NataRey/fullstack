@@ -1,5 +1,5 @@
-import multer from "multer";
-import path from 'path';
+import multer from "multer";//manejar las cargas de archivos
+import path from 'path'; // manipular extensiones y nombre de archivos
 
 const storage = multer.diskStorage({
     destination: 'imagenes',
