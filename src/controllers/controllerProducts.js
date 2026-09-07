@@ -1,6 +1,6 @@
 import {uploadSingleImage} from '../middleware/upload.js'
-import fs from 'fs';
 import modelProducts from '../models/modelProducts.js';
+import fs from 'fs';
 import path from 'path';
 
 const controllerProducts = {
