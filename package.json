@@ -25,6 +25,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "fs": "^0.0.1-security",
     "fs-extra": "^11.4.0",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.6.0",
