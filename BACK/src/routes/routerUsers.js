@@ -10,3 +10,4 @@ routerUsers.delete('/:id', ControllerUsers.deleteUser);
 routerUsers.put('/:id', ControllerUsers.updateUser);
 
 export default routerUsers;
+
