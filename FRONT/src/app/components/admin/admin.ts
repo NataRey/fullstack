@@ -1,13 +1,14 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-shop',
+  selector: 'app-admin',
   imports: [],
-  templateUrl: './shop.html',
-  styleUrl: './shop.css',
+  templateUrl: './admin.html',
+  styleUrl: './admin.css',
 })
-export class Shop {
+export class Admin {
+
   constructor(private router: Router){}
 
   logout(){
