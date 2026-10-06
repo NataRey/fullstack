@@ -28,7 +28,25 @@ const schemaUser = new Schema({
         type: String, 
         required: true,
         match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/, 'password invalido']
+    }, 
+
+    rol: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+    set: v => {
+        // Roles permitidos en tu sistema
+        const rolesValidos = ['user', 'admin'];
+        
+        // Si no viene valor, viene vacío o es un valor no permitido (como 'jefe'), asigna 'user'
+        if (!v || typeof v !== 'string' || v.trim() === '' || !rolesValidos.includes(v)) {
+            return 'user';
+        }
+        
+        return v; // Retorna 'admin' o 'user'
     }
+}
+
 });
 
 export default model ('User', schemaUser);

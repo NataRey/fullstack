@@ -4,6 +4,7 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { PageNotFound } from './components/page-not-found/page-not-found';
 
+
 export const routes: Routes = [
     {path: 'home', title: 'Home', component:Home},
     {path: 'login', title: 'Login', component: Login},

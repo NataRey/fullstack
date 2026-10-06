@@ -4,12 +4,13 @@ import bcrypt from "bcryptjs";
 const ControllerUsers = {
     createUser: async(sol , res)=>{
         try{
-            const {name, email, password} = sol.body;
+            const {name, email, password, rol} = sol.body;
             const passwordProtected = await bcrypt.hash(password, 10);
             const newUser = new modelUser({
                 name,
                 email,
                 password: passwordProtected,
+                rol: rol || 'user'
             });
             console.log(newUser);
 
