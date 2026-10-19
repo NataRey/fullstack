@@ -114,6 +114,6 @@ const ControllerUsers = {
             });
         }
     }
-}
+};
 
 export default ControllerUsers;

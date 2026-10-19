@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path: 'login', title: 'Login', component: Login},
     {path: 'register', title: 'Register', component: Register},
     {path: 'shop', title: 'Shop', component: Shop, canActivate:[authGuard]},
-    {path: 'admin', title: 'Admin', component: Admin},
+    {path: 'admin', title: 'Admin', component: Admin, canActivate:[authGuard]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', title: '404|Page Not Found', component: PageNotFound}
 ];

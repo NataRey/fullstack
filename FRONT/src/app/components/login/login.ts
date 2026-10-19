@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
+  
   router = inject(Router);
   loginService : LoginService = inject(LoginService);
-
   credentialsForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
@@ -51,4 +51,6 @@ export class Login {
       console.log("Error formulario invalido");
     }
   }
+
+  
 }
