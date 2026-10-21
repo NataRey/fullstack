@@ -1,5 +1,8 @@
 import modelUser from "../models/modelUser.js";
 import bcrypt from "bcryptjs";
+import crypto from "node:crypto";
+import nodemailer from "nodemailer";
+
 
 const ControllerUsers = {
     createUser: async(sol , res)=>{
@@ -115,5 +118,58 @@ const ControllerUsers = {
         }
     }
 };
+
+function generarContrasenaAleatoria(){
+    return crypto.randomBytes(6).toString('hex');
+}
+
+export const forgotPassword = async (sol,res)=>{
+    try{
+        const {email}= sol.body;
+        const user = await modelUser.findOne({email});
+        if(!user){
+             res.json({
+                result: 'mistake',
+                message: 'El correo ingresado no se encuentra en la base de datos',
+                data: null,
+            });
+        }
+        const newPass = generarContrasenaAleatoria();
+        const hashPassword = await bcrypt.hash(newPass, 10);
+        user.password = hashPassword;
+        await user.save();
+
+        const trasporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth:{
+                user: process.env.EMAIL_NODE,
+                pass: process.env.PASS_NODE
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_NODE,
+            to: email,
+            subject: 'Recuperacion de contraseña',
+            text:`Hola ${user.name}, \n\n Tu nueva contraseña temporal es: ${newPass}\n\nRecuerda actualizar tu contraseña en tu perfil por seguridad. \n\n Saludos desde el área de soporte.`
+        }
+
+        await trasporter.sendMail(mailOptions);
+        res.json({
+                    result: 'fine',
+                    message: 'Se ha enviado una nueva contraseña al correo registrado',
+                });
+
+
+    }catch(error){
+        console.log('Error al generar contrasena ', error);
+         res.json({
+                result: 'mistake',
+                message: 'Error interno en el servidor' , error: error.message,
+            });
+    }
+}
+
+
 
 export default ControllerUsers;
