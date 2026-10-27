@@ -30,6 +30,12 @@ const schemaUser = new Schema({
         match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/, 'password invalido']
     }, 
 
+    imagen:{
+        type: String,
+        default:'imagenes/usuarios/default-user.svg'
+    },
+
+
     rol: {
     type: String,
     enum: ['user', 'admin'],

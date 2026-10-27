@@ -1,3 +1,33 @@
 <p>admin works!</p>
-<button (click)="logout()">Cerrar sesión</button>
-<h2>Bienvenido Admin</h2>
+
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+    
+    <h2>Bienvenido Admin</h2>
+    <div class="d-flex align-items-center gap-3">
+      <div class="text-end">
+       
+        <span class="d-block fw-bold text-dark">{{adminName()}}</span>
+        <small class="text-muted">Administrador</small>
+      </div>
+
+
+      <img 
+        [src]="adminImage()" 
+        alt="Foto de perfil" 
+        class="rounded-circle border border-2 border-primary object-fit-cover shadow-sm"
+        style="width: 50px; height: 50px;">
+
+      <button class="btn btn-outline-danger btn-sm ms-3" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <p class="lead">Panel de control de administración activo.</p>
+    </div>
+  </div>
+</div>

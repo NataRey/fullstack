@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 import routerUsers from './routes/routerUsers.js';
 import routerLogin from './routes/routerLogin.js';
 import routerProducts from './routes/routerProducts.js';
@@ -9,6 +10,7 @@ const servidor = express();
 servidor.use(cors({origin: 'http://localhost:4200'}));
 servidor.use(morgan("dev"));
 servidor.use(express.json());
+servidor.use('/imagenes', express.static(path.resolve('imagenes')));
 servidor.use('/users', routerUsers);
 servidor.use('/inicio-sesion', routerLogin);
 servidor.use('/products', routerProducts );

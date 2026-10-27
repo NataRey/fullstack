@@ -16,7 +16,8 @@ const controllerLogin = {
                 const token = await generarToken({
                     id: userFound._id,
                     name: userFound.name,
-                    rol: userFound.rol
+                    rol: userFound.rol,
+                    imagen:userFound.imagen
                 });
                 res.json({
                     result: 'fine',

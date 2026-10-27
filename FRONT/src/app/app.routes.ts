@@ -5,6 +5,7 @@ import { Register } from './components/register/register';
 import { Shop } from './components/shop/shop';
 import { Admin } from './components/admin/admin';
 import { authGuard } from './guards/auth-guard';
+import { Recover } from './components/recover/recover';
 import { PageNotFound } from './components/page-not-found/page-not-found';
 
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path: 'register', title: 'Register', component: Register},
     {path: 'shop', title: 'Shop', component: Shop, canActivate:[authGuard]},
     {path: 'admin', title: 'Admin', component: Admin, canActivate:[authGuard]},
+    {path: 'recover', title: 'Recover', component: Recover},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', title: '404|Page Not Found', component: PageNotFound}
 ];

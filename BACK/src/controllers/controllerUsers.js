@@ -2,17 +2,23 @@ import modelUser from "../models/modelUser.js";
 import bcrypt from "bcryptjs";
 import crypto from "node:crypto";
 import nodemailer from "nodemailer";
+import fs from 'fs';
 
+const DEFAULT_IMAGE = 'imagenes/usuarios/default-user.svg';
 
 const ControllerUsers = {
     createUser: async(sol , res)=>{
         try{
             const {name, email, password, rol} = sol.body;
             const passwordProtected = await bcrypt.hash(password, 10);
+            const rutaImagen = sol.file
+            ? `imagenes/usuarios/${sol.file.filename}`
+            : DEFAULT_IMAGE;
             const newUser = new modelUser({
                 name,
                 email,
                 password: passwordProtected,
+                imagen: rutaImagen,
                 rol: rol || 'user'
             });
             console.log(newUser);
@@ -26,6 +32,9 @@ const ControllerUsers = {
                 });
             }
         }catch(error){
+            if(sol.file && fs.existsSync(`imagenes/usuarios/${sol.file.filename}`)){
+                fs.unlinkSync(`imagenes/usuarios/${sol.file.filename}`);
+            }
             res.json({
                 result: 'mistake',
                 message: 'An error occurred while creating the user',
@@ -76,6 +85,12 @@ const ControllerUsers = {
         try{
             const userDelete = await modelUser.findByIdAndDelete(sol.params.id);
                 if(userDelete._id){
+                    if(userDelete.imagen && userDelete.imagen !== DEFAULT_IMAGE){
+                        if(fs.existsSync(userDelete.imagen)){
+                        fs.unlinkSync(userDelete.imagen);
+                    }
+                    }
+                    
                     res.json({
                     result: 'fine',
                     message: 'User Delete',
@@ -96,7 +111,16 @@ const ControllerUsers = {
             if (dataToUpdate.password) {
                 dataToUpdate.password = await bcrypt.hash(dataToUpdate.password, 10);
             }
-
+            if (sol.file) {
+                const userActual = await modelUser.findById(sol.params.id);
+                if(userActual && userActual.imagen && userActual.imagen !== DEFAULT_IMAGE){
+                    if(fs.existsSync(userActual.imagen)){
+                        fs.unlinkSync(userActual.imagen);
+                    }
+                }
+                dataToUpdate.imagen = `imagenes/usuarios/${sol.file.filename}`;
+            }
+            
             const userUpdate = await modelUser.findByIdAndUpdate(
                 sol.params.id,
                 dataToUpdate,
@@ -110,6 +134,9 @@ const ControllerUsers = {
                 });
             }
         } catch (error) {
+            if(sol.file && fs.existsSync(`imagenes/usuarios/${sol.file.filename}`)){
+                fs.unlinkSync(`imagenes/usuarios/${sol.file.filename}`);
+            }
             res.json({
                 result: 'mistake',
                 message: 'An error occurred while updating the user',

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Círculo de fondo -->
+  <circle cx="100" cy="100" r="95" fill="#e4e6eb" stroke="#bec3c9" stroke-width="4" />
+  <!-- Cabeza -->
+  <circle cx="100" cy="75" r="35" fill="#8d949e" />
+  <!-- Cuerpo recortado al círculo -->
+  <path d="M 40 175 C 40 130, 160 130, 160 175" fill="#8d949e" />
+</svg>
