@@ -2,10 +2,10 @@ import { Component, inject, signal , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from '../../services/user-service';
-
+import { CrudProductos } from './crud-productos/crud-productos';
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [CrudProductos],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })

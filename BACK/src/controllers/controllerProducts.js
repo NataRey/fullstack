@@ -20,6 +20,7 @@ const controllerProducts = {
                     descripcion: sol.body.descripcion,
                     precio: sol.body.precio,
                     color: sol.body.color,
+                    categoria: sol.body.categoria,
                     imagen: sol.file.filename
                 });
 
@@ -62,6 +63,11 @@ const controllerProducts = {
 
     readProducts: async (sol, res)=>{
         try {
+            // filtro por categoria 
+            const { categoria } = sol.query;
+            const filtro = categoria ? { categoria: categoria } : {};
+            // fin filtro por categoria
+
             const allProductsFound = await modelProducts.find();
                 res.json({
                     result: 'fine',
@@ -113,6 +119,7 @@ updateProduct: async (sol, res) => {
             descripcion: sol.body.descripcion,
             precio: sol.body.precio,
             color: sol.body.color,
+            categoria: sol.body.categoria,
             imagen: sol.file ? sol.file.filename : productExistente.imagen,
         };
 
