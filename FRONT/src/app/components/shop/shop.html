@@ -1,2 +1,53 @@
-<p>shop works!</p>
-<button (click)="logout()">Cerrar sesión</button>
+<div class="container mt-4">
+  <!-- Botón superior para cerrar sesión -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-danger btn-sm" (click)="logout()">Cerrar sesión</button>
+  </div>
+  <div class="mb-5">
+    <h3>Productos ecológicos</h3>
+    <div class="row g-3">
+      @for(prod of productosEcologicos(); track prod._id){
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img [src]="imagenBaseUrl + prod.imagen"
+            class="card-img-top p-2 object-fit-contain"
+            style="height: 200px;" 
+            [alt]="prod.modelo">
+            <div class="card-body">
+              <h5 class="card-title">{{prod.modelo}}</h5>
+              <p class="card-text">{{prod.descripcion}}</p>
+              <p class="card-text">{{prod.color}}</p>
+              <p class="card-text">{{prod.precio}}</p>
+            </div>
+          </div>
+        </div>
+      }@empty {
+        <p class="card-text">No hay productos en la categoria Ecológicos</p>
+      }
+    </div>
+  </div>
+
+  <div class="mb-5">
+    <h3>Productos sombrillas</h3>
+    <div class="row g-3">
+      @for(prod of productosSombrillas(); track prod._id){
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img [src]="imagenBaseUrl + prod.imagen"
+            class="card-img-top p-2 object-fit-contain"
+            style="height: 200px;" 
+            [alt]="prod.modelo">
+            <div class="card-body">
+              <h5 class="card-title">{{prod.modelo}}</h5>
+              <p class="card-text">{{prod.descripcion}}</p>
+              <p class="card-text">{{prod.color}}</p>
+              <p class="card-text">{{prod.precio}}</p>
+            </div>
+          </div>
+        </div>
+      }@empty {
+        <p class="card-text">No hay productos en la categoria Ecológicos</p>
+      }
+    </div>
+  </div>
+</div>
