@@ -1,0 +1,89 @@
+import { beforeEach, describe, expect, jest, test} from '@jest/globals';
+import { json } from 'express';
+//1. Simular Multer (uploadSingleImage )ejecuta el callback sin exigir elarchivo real
+jest.unstable_mockModule('../src/middleware/upload.js', ()=>({
+
+    uploadSingleImage: jest.fn((sol, res, callback)=> callback(null)), 
+}));
+const mockSave = jest.fn();
+    const mockModelProducts = jest.fn().mockImplementation((datos)=>({
+        ...datos,
+        save: mockSave,
+    }));
+    mockModelProducts.find = jest.fn();
+    mockModelProducts.findById = jest.fn();
+    mockModelProducts.findByIdAndUpdate = jest.fn();
+    mockModelProducts.findByIdAndDelete = jest.fn();
+
+    jest.unstable_mockModule('../src/models/modelProducts.js', ()=>({
+       default: mockModelProducts, 
+    }));
+
+    //2. Importamos dinamicamente todo
+    const {uploadSingleImage} = await import('../src/middleware/upload.js');
+    const { default: modelProducts} = await import ('../src/models/modelProducts.js');
+    const { default: controllerProducts} = await import('../src/controllers/controllerProducts.js');
+
+    describe('PRUEBA UNITARIA: controllerProducts', ()=>{
+        beforeEach(() =>{
+            jest.clearAllMocks();
+        });
+
+        //Prueba 1 readProducts find
+        test('readProducts debe responder result: "fine" y la lista de productos', async()=>{
+            // ARRANGE (preparar)
+            const productosFalsos =[
+                {_id: '1', modelo: 'Termos ecologico', precio: 25000, categoria: 'Termos'},
+                {_id: '2', modelo: 'sombrilla', precio: 15000, categoria: 'sombrillas'},
+            ];
+            // programamos que devolvera mongoDB falso cuando llamen a find()
+            modelProducts.find.mockResolvedValue(productosFalsos);
+            const sol = {query: {}};
+            const res = { json: jest.fn()};
+            // ACT (actuar)
+            await controllerProducts.readProducts(sol, res);
+            //ASSERT (verificar)
+            expect(modelProducts.find).toHaveBeenCalledTimes(1);
+            expect(res.json).toHaveBeenCalledWith({
+                result:'fine',
+                message:'Products read',
+                data: productosFalsos,
+            });
+        });
+
+        // Prueba 2  readProducts (catch)
+        test('readProducts debe responder result: "mistake" si falla la bd ', async()=>{
+            //ARRANGE (preparar)
+            const errorSimulado = new Error('Fallo de conexion a Mongo');
+            modelProducts.find.mockRejectedValue(errorSimulado);
+            const sol = {query: {}};
+            const res = { json: jest.fn()};
+            //ACT 
+            await controllerProducts.readProducts(sol, res);
+            //ASSERT
+            expect(res.json).toHaveBeenCalledWith({
+                result: 'mistake',
+                message:'An error occurred reading the products',
+                data: errorSimulado,
+            });
+        });
+
+        // Prueba 3 readProductId (buscar por id)
+        test('readID', async()=>{
+            //ARRANGE
+            const readId ={_id: 'id123', modelo: 'vaso', descripcion: 'vaso grande para la sala', precio: 32000,color:'gris',categoria: 'vasos', imagen:'vaso123.jpg'};
+            modelProducts.findById.mockResolvedValue(readId);
+            const sol = {params: {id: 'id123'}};
+            const res = { json: jest.fn()};
+            //ACT
+            await controllerProducts.readProductId(sol,res);
+            //ASSERT
+            expect(modelProducts.findById).toHaveBeenCalledWith('id123');
+            expect(res.json).toHaveBeenCalledWith({
+                result:'fine',
+                message: 'Product read',
+                data: readId,
+            });
+        });
+
+    });
