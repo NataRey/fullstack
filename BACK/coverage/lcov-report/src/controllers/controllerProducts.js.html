@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.91% </span>
+                <span class="strong">34.78% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/46</span>
+                <span class='fraction'>16/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.69% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/26</span>
+                <span class='fraction'>4/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.91% </span>
+                <span class="strong">34.78% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/46</span>
+                <span class='fraction'>16/46</span>
             </div>
         
             
@@ -391,24 +391,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -571,25 +571,25 @@ updateProduct: <span class="fstat-no" title="function not covered" >as</span>ync
     }
 },
 &nbsp;
-deleteProduct : <span class="fstat-no" title="function not covered" >as</span>ync (sol, res)=&gt;{
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const productDelete = <span class="cstat-no" title="statement not covered" >await modelProducts.findByIdAndDelete(sol.params.id);</span>
+deleteProduct : async (sol, res)=&gt;{
+    try {
+        const productDelete = await modelProducts.findByIdAndDelete(sol.params.id);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if(!productDelete){</span>
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(!productDelete){
 <span class="cstat-no" title="statement not covered" >            res.json({</span>
             result: 'mistake',
             message: 'Product not found',
             data:null,
         });
         }
-<span class="cstat-no" title="statement not covered" >        if(productDelete.imagen){</span>
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(productDelete.imagen){
             const rutaImagen = <span class="cstat-no" title="statement not covered" >path.join('imagenes', productDelete.imagen);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            if(fs.existsSync(rutaImagen)){</span>
 <span class="cstat-no" title="statement not covered" >                fs.unlinkSync(rutaImagen);</span>
             }
         }
-<span class="cstat-no" title="statement not covered" >        res.json({</span>
+        res.json({
             result: 'fine',
             message: 'Product deleted successfully',
             data:productDelete._id,
@@ -613,7 +613,7 @@ export default controllerProducts;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-11-20T00:33:09.733Z
+                at 2026-11-20T01:10:32.646Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

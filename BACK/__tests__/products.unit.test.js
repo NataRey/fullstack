@@ -85,5 +85,21 @@ const mockSave = jest.fn();
                 data: readId,
             });
         });
-
+        //Prueba 4. Eliminar producto
+        test ('deleteProductById', async ()=>{
+            //Arrange (preparar)
+            const deleteProductById = {_id: 'id555', modelo: 'vaso', descripcion: 'vaso grande'};
+            modelProducts.findByIdAndDelete.mockResolvedValue (deleteProductById);
+            const sol = {params: {id:'id555'}};
+            const res = {json: jest.fn()};
+            //Act (actuar)
+            await controllerProducts.deleteProduct(sol, res);
+            //ASSERT (verificar)
+            expect(modelProducts.findByIdAndDelete).toHaveBeenCalledWith('id555');
+            expect(res.json).toHaveBeenCalledWith({
+                result: 'fine',
+                message: 'Product deleted successfully',// Mismo mensaje del controlador
+                data: 'id555',
+            });
+        });
     });
