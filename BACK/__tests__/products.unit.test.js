@@ -86,4 +86,75 @@ const mockSave = jest.fn();
             });
         });
 
+<<<<<<< Updated upstream
+=======
+        //Prueba 5 DeleteProducts (Catch)
+        test('deleteProductById debe responder result: "mistake" si falla la bd', async()=>{
+            //ARRANGE (preparar)
+            const errorDelete = new Error('Fallo eliminando el producto');
+            modelProducts.findByIdAndDelete.mockRejectedValue(errorDelete);
+            const sol = {params: {id:'id556'}};
+            const res = {json: jest.fn()};
+
+            //ACT (actuar)
+
+            await controllerProducts.deleteProduct(sol, res);
+
+            //ASSERT (verificar)
+
+            expect(res.json).toHaveBeenCalledWith({
+                result: 'mistake',
+                message: 'An error occurred deleting the product',
+                data:errorDelete,
+            });
+        });
+
+        //Prueba 6 Update products
+        test('updateProductById debe actualizar y devolver un result: "fine"', async()=>{
+            //ARRANGE (preparar)
+            const productoViejo = {
+                _id:'abc123',
+                modelo:'vaso',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 10000,
+                color: 'blanco',
+                categoria: 'vaso',
+                imagen: 'vaso123.jpg'
+            };
+
+            const productoNuevo = {
+                precio: 20000
+            };
+
+            const actualizacion = {
+                _id:'abc123',
+                modelo:'vaso',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 20000,
+                color: 'blanco',
+                categoria: 'vaso',
+                imagen: 'vaso123.jpg'
+            };
+
+            modelProducts.findById.mockResolvedValue(productoViejo);
+            modelProducts.findByIdAndUpdate.mockResolvedValue(actualizacion);
+
+            const sol = {params: {id:'abc123'}, body:productoNuevo};
+            const res = {json: jest.fn()};
+
+            //ACT (actuar)
+            await controllerProducts.updateProduct(sol, res);
+
+            //ASSERT (validar)
+            expect(res.json).toHaveBeenCalledWith({
+                result: 'fine',
+                message: 'product updated successfully',
+                data: actualizacion,
+            });
+
+        });
+
+           
+        
+>>>>>>> Stashed changes
     });
