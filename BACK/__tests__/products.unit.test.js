@@ -102,4 +102,25 @@ const mockSave = jest.fn();
                 data: 'id555',
             });
         });
+
+        //Prueba 5 DeleteProducts (Catch)
+        test('deleteProductById debe responder result: "mistake" si falla la bd', async()=>{
+            //ARRANGE (preparar)
+            const errorDelete = new Error('Fallo eliminando el producto');
+            modelProducts.findByIdAndDelete.mockRejectedValue(errorDelete);
+            const sol = {params: {id:'id556'}};
+            const res = {json: jest.fn()};
+
+            //ACT (actuar)
+
+            await controllerProducts.deleteProduct(sol, res);
+
+            //ASSERT (verificar)
+
+            expect(res.json).toHaveBeenCalledWith({
+                result: 'mistake',
+                message: 'An error occurred deleting the product',
+                data:errorDelete,
+            });
+        });
     });
