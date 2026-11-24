@@ -16,15 +16,21 @@ import request from 'supertest';
   jest.unstable_mockModule('../src/models/modelProducts.js', () => ({
       default: mockModelProducts,
   }));
-  // 2. Simulamos el middleware de subida de imágenes
-  const mockUploadSingleImage = jest.fn((req, res, cb) => {
-      req.file = { filename: 'imagen_prueba.png' }; // Simulamos el archivo subido
-      cb(null); // Sin errores
-  });
+    // 2. Simulamos el middleware de subida de imágenes
+const mockUploadSingleImage = jest.fn((req, res, cb) => {
+    req.file = { filename: 'imagen_prueba.png' };
+    cb(null);
+});
 
-  jest.unstable_mockModule('../src/middleware/upload.js', () => ({
-      uploadSingleImage: mockUploadSingleImage,
-  }));
+const mockUploadUserImage = jest.fn((req, res, cb) => {
+    req.file = { filename: 'usuario_prueba.png' };
+    cb(null);
+});
+
+jest.unstable_mockModule('../src/middleware/upload.js', () => ({
+    uploadSingleImage: mockUploadSingleImage,
+    uploadUserImage: mockUploadUserImage,
+}));
 
   // 3. Importar dinámicamente el modelo simulado y el servidor Express
   const { default: modelProducts } = await import('../src/models/modelProducts.js');
