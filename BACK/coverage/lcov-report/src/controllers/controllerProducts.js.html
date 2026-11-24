@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.86% </span>
+                <span class="strong">73.91% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/46</span>
+                <span class='fraction'>34/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.3% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>11/26</span>
+                <span class='fraction'>12/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.86% </span>
+                <span class="strong">73.91% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/46</span>
+                <span class='fraction'>34/46</span>
             </div>
         
             
@@ -251,16 +251,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -268,11 +261,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -431,10 +431,10 @@ import fs from 'fs';
 import path from 'path';
 &nbsp;
 const controllerProducts = {
-    createPorduct: <span class="fstat-no" title="function not covered" >as</span>ync (sol,res)=&gt;{
-<span class="cstat-no" title="statement not covered" >        try {</span>
-<span class="cstat-no" title="statement not covered" >            uploadSingleImage(sol, res, <span class="fstat-no" title="function not covered" >as</span>ync(error)=&gt;{</span>
-<span class="cstat-no" title="statement not covered" >                if(error){</span>
+    createPorduct: async (sol,res)=&gt;{
+        try {
+            uploadSingleImage(sol, res, async(error)=&gt;{
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(error){
 <span class="cstat-no" title="statement not covered" >                    res.json({</span>
                     result: 'mistake',
                     message: 'An error occurred while upload the image',
@@ -442,7 +442,7 @@ const controllerProducts = {
                     });
                 }
 &nbsp;
-                const newProduct = <span class="cstat-no" title="statement not covered" >new modelProducts({</span>
+                const newProduct = new modelProducts({
                     modelo: sol.body.modelo,
                     descripcion: sol.body.descripcion,
                     precio: sol.body.precio,
@@ -451,9 +451,9 @@ const controllerProducts = {
                     imagen: sol.file.filename
                 });
 &nbsp;
-                const savedProduct = <span class="cstat-no" title="statement not covered" >await newProduct.save();</span>
+                const savedProduct = await newProduct.save();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                    res.json({</span>
+                    res.json({
                     result: 'fine',
                     message: 'Product created',
                     data: savedProduct,
@@ -613,7 +613,7 @@ export default controllerProducts;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-11-24T01:12:02.040Z
+                at 2026-11-24T02:17:12.667Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
