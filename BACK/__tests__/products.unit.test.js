@@ -124,84 +124,78 @@ const mockSave = jest.fn();
             });
         });
 
-        //Prueba 6 Update products
-        test('updateProductById debe actualizar y devolver un result: "fine"', async()=>{
-            //ARRANGE (preparar)
-            const productoViejo = {
-                _id:'abc123',
-                modelo:'vaso',
-                descripcion: 'un vaso muy increible para tu casa',
-                precio: 10000,
-                color: 'blanco',
-                categoria: 'vaso',
-                imagen: 'vaso123.jpg'
-            };
+            //Prueba 6 Update products
+            test('updateProductById debe actualizar y devolver un result: "fine"', async()=>{
+                //ARRANGE (preparar)
+                const productoViejo = {
+                    _id:'abc123',
+                    modelo:'vaso',
+                    descripcion: 'un vaso muy increible para tu casa',
+                    precio: 10000,
+                    color: 'blanco',
+                    categoria: 'vaso',
+                    imagen: 'vaso123.jpg'
+                };
 
-            const productoNuevo = {
-                precio: 20000
-            };
+                const productoNuevo = {
+                    precio: 20000
+                };
 
-            const actualizacion = {
-                _id:'abc123',
-                modelo:'vaso',
-                descripcion: 'un vaso muy increible para tu casa',
-                precio: 20000,
-                color: 'blanco',
-                categoria: 'vaso',
-                imagen: 'vaso123.jpg'
-            };
+                const actualizacion = {
+                    _id:'abc123',
+                    modelo:'vaso',
+                    descripcion: 'un vaso muy increible para tu casa',
+                    precio: 20000,
+                    color: 'blanco',
+                    categoria: 'vaso',
+                    imagen: 'vaso123.jpg'
+                };
 
-            modelProducts.findById.mockResolvedValue(productoViejo);
-            modelProducts.findByIdAndUpdate.mockResolvedValue(actualizacion);
+                modelProducts.findById.mockResolvedValue(productoViejo);
+                modelProducts.findByIdAndUpdate.mockResolvedValue(actualizacion);
 
-            const sol = {params: {id:'abc123'}, body:productoNuevo};
-            const res = {json: jest.fn()};
+                const sol = {params: {id:'abc123'}, body:productoNuevo};
+                const res = {json: jest.fn()};
 
-            //ACT (actuar)
-            await controllerProducts.updateProduct(sol, res);
+                //ACT (actuar)
+                await controllerProducts.updateProduct(sol, res);
 
-            //ASSERT (validar)
-            expect(res.json).toHaveBeenCalledWith({
-                result: 'fine',
-                message: 'product updated successfully',
-                data: actualizacion,
+                //ASSERT (validar)
+                expect(res.json).toHaveBeenCalledWith({
+                    result: 'fine',
+                    message: 'product updated successfully',
+                    data: actualizacion,
+                });
+
             });
-
-        });
-        // actualizar producto con imagen
+            // actualizar producto con imagen
         test('updateProductById debe actualizar un producto con imagen', async()=>{
             // ARRANGE
             const productoAnterior = {
+                    _id: 'k102309',
+                    modelo:'vaso',
+                    descripcion: 'un vaso muy increible para tu casa',
+                    precio: 20000,
+                    color: 'blanco',
+                    categoria: 'vaso',
+                    imagen: 'vaso123.jpg'
+                };
+            const productoNuevo2 = {
+                modelo:'vasoRoto',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 20000,
+                color: 'gris',
+                categoria: 'vaso',
+                };
+            const imagenNueva = {
+                filename: 'vasoabc.jpg'
+            };
+            const productoActualizado = {
                 _id: 'k102309',
-                modelo:'vaso',
-                descripcion: 'un vaso muy increible para tu casa',
-                precio: 20000,
-                color: 'blanco',
-                categoria: 'vaso',
-                imagen: 'vaso123.jpg'
-                     };
-                     const productoNuevo2 = {
-                modelo:'vaso',
-                descripcion: 'un vaso muy increible para tu casa',
-                precio: 20000,
-                color: 'blanco',
-                categoria: 'vaso',
-
-                     };
-                     const imagenNueva = {
-                        filename: 'vasoabc.jpg'
-
-                     };
-                     const productoActualizado = {
-                 _id: 'k102309',
-                 modelo:'vaso',
-                descripcion: 'un vaso muy increible para tu casa',
-                precio: 20000,
-                color: 'blanco',
-                categoria: 'vaso',
+                ...productoNuevo2,
                 imagen: imagenNueva.filename
-                     };
-                     modelProducts.findById.mockResolvedValue(productoAnterior);
+            };
+            modelProducts.findById.mockResolvedValue(productoAnterior);
             modelProducts.findByIdAndUpdate.mockResolvedValue(productoActualizado);
             const sol = {
                 params: { id: 'k102309'},
@@ -211,7 +205,17 @@ const mockSave = jest.fn();
             const res = {
                 json: jest.fn()
             };
-            
+            //ACT
+            await controllerProducts.updateProduct(sol,res); 
+            //ASSERT
+            expect(modelProducts.findById).toHaveBeenCalledWith('k102309');
+            expect(modelProducts.findByIdAndUpdate).toHaveBeenCalledWith('k102309', { ...productoNuevo2, imagen:'vasoabc.jpg'}, {new: true});
+            expect(res.json).toHaveBeenCalledWith({
+                result:'fine',
+                message: 'product updated successfully',
+                data: productoActualizado
+            });
+
         })
     });
 
