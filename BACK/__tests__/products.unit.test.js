@@ -168,5 +168,50 @@ const mockSave = jest.fn();
             });
 
         });
+        // actualizar producto con imagen
+        test('updateProductById debe actualizar un producto con imagen', async()=>{
+            // ARRANGE
+            const productoAnterior = {
+                _id: 'k102309',
+                modelo:'vaso',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 20000,
+                color: 'blanco',
+                categoria: 'vaso',
+                imagen: 'vaso123.jpg'
+                     };
+                     const productoNuevo2 = {
+                modelo:'vaso',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 20000,
+                color: 'blanco',
+                categoria: 'vaso',
+
+                     };
+                     const imagenNueva = {
+                        filename: 'vasoabc.jpg'
+
+                     };
+                     const productoActualizado = {
+                 _id: 'k102309',
+                 modelo:'vaso',
+                descripcion: 'un vaso muy increible para tu casa',
+                precio: 20000,
+                color: 'blanco',
+                categoria: 'vaso',
+                imagen: imagenNueva.filename
+                     };
+                     modelProducts.findById.mockResolvedValue(productoAnterior);
+            modelProducts.findByIdAndUpdate.mockResolvedValue(productoActualizado);
+            const sol = {
+                params: { id: 'k102309'},
+                body: productoNuevo2,
+                file: imagenNueva
+            };
+            const res = {
+                json: jest.fn()
+            };
+            
+        })
     });
 
