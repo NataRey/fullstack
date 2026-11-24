@@ -88,11 +88,11 @@ updateProduct: async (sol, res) => {
     try {
         const { id } = sol.params;
 
-  
+
         const productExistente = await modelProducts.findById(id);
 
         if (!productExistente) {
- 
+
             if (sol.file) {
                 fs.unlinkSync(sol.file.path);
             }

@@ -262,5 +262,24 @@ const mockSave = jest.fn();
 
         });
 
-    });
+//Prueba 9.1 ReadProductId (Catch)
+test('readProductId debe responder result: "mistake" si falla la bd', async () => {
+    
+    //ARRANGE (preparar)
+    const errorRead = new Error('Fallo leyendo el producto');
+    modelProducts.findById.mockRejectedValue(errorRead);
+    const sol = { params: { id: 'id556' } };
+    const res = { json: jest.fn() };
 
+    //ACT (actuar)
+    await controllerProducts.readProductId(sol, res);
+
+    //ASSERT (verificar)
+    expect(res.json).toHaveBeenCalledWith({
+        result: 'mistake',
+        message: 'An error occurred reading the product by Id',
+        data: errorRead,
+    });
+});
+
+    });
