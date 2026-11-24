@@ -217,5 +217,50 @@ const mockSave = jest.fn();
             });
 
         })
+        // Prueba 8 Create product 
+        test('createProduct se debe crear un producto y devolver un resultado "fine"', async ()=>{
+            //Arrange
+            const newData = {
+
+                modelo:'agenda esfero',
+                descripcion: 'agenda 15 x 20, con esfero incluido',
+                precio: '5000',
+                color: 'azul',
+                categoria: 'agendas'
+            };
+
+            const productSave = {
+                _id: 'id1234',
+                ...newData,
+                imagen: 'agenda.jpeg'
+
+            };
+        mockSave.mockResolvedValue(productSave);
+        
+        const sol = {
+            body: newData,
+            file: {filename:'agenda.jpeg'} 
+        };
+
+        const res = {
+            json: jest.fn()
+        };
+
+        // Act
+
+        await controllerProducts.createPorduct(sol, res);
+        
+        // ASSERT (verificar)
+        expect(uploadSingleImage).toHaveBeenCalledTimes(1);
+        expect(mockSave).toHaveBeenCalledTimes(1);
+        expect(res.json).toHaveBeenCalledWith({
+            result: 'fine',
+            message: 'Product created',
+            data: productSave,
+        });
+
+
+        });
+
     });
 
