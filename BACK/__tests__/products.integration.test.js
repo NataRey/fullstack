@@ -1,19 +1,34 @@
-import { expect, jest } from '@jest/globals';
+import { jest } from '@jest/globals';
 import request from 'supertest';
 
-//1. Simulamos el modelo de mongose 
-jest.unstable_mockModule('../src/models/modelProducts.js', ()=>({
-    default: {
-    find : jest.fn(),
-    findById : jest.fn(),
-    findByIdAndUpdate : jest.fn(),
-    findByIdAndDelete : jest.fn(),
-    }
-}));
+  // 1. Simulamos el modelo de Mongoose (soporta "new modelProducts()" y métodos estáticos)
+  const mockSave = jest.fn();
+  const mockModelProducts = jest.fn().mockImplementation((datos) => ({
+      ...datos,
+      save: mockSave,
+  }));
 
-//2. Importar dinamicamente el modelo simulado y el servidor express
-const { default: modelProducts} = await import('../src/models/modelProducts.js');
-const { default: servidor } = await import('../src/servidor.js');
+  mockModelProducts.find = jest.fn();
+  mockModelProducts.findById = jest.fn();
+  mockModelProducts.findByIdAndUpdate = jest.fn();
+  mockModelProducts.findByIdAndDelete = jest.fn();
+
+  jest.unstable_mockModule('../src/models/modelProducts.js', () => ({
+      default: mockModelProducts,
+  }));
+  // 2. Simulamos el middleware de subida de imágenes
+  const mockUploadSingleImage = jest.fn((req, res, cb) => {
+      req.file = { filename: 'imagen_prueba.png' }; // Simulamos el archivo subido
+      cb(null); // Sin errores
+  });
+
+  jest.unstable_mockModule('../src/middleware/upload.js', () => ({
+      uploadSingleImage: mockUploadSingleImage,
+  }));
+
+  // 3. Importar dinámicamente el modelo simulado y el servidor Express
+  const { default: modelProducts } = await import('../src/models/modelProducts.js');
+  const { default: servidor } = await import('../src/servidor.js');
 
 describe('PRUEBA DE INTEGRACION: Rutas /products (Estilo postman)', ()=>{
         beforeEach(() =>{
