@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { expect, jest } from '@jest/globals';
 import request from 'supertest';
 
   // 1. Simulamos el modelo de Mongoose (soporta "new modelProducts()" y métodos estáticos)
@@ -89,5 +89,21 @@ describe('PRUEBA DE INTEGRACION: Rutas /products (Estilo postman)', ()=>{
             const respuesta = await request(servidor).get('/rutaFalsa');
             //assert
             expect(respuesta.statusCode).toBe(404);
+        });
+
+        // prueba 4 Delete product id
+        test('DELETE/products/:id status 200', async()=>{
+            //arrange
+            const productoEliminado ={_id: '789', modelo: 'termo'};
+            modelProducts.findByIdAndDelete.mockResolvedValue(productoEliminado);
+            //act
+            const respuesta = await request(servidor).delete('/products/789');
+            //assert
+            expect(respuesta.statusCode).toBe(200);
+            expect(respuesta.body).toEqual({
+                result: 'fine',
+                message: 'Product deleted successfully',
+                data:'789',
+            });
         });
     });
