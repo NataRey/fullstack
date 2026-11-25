@@ -106,4 +106,36 @@ describe('PRUEBA DE INTEGRACION: Rutas /products (Estilo postman)', ()=>{
                 data:'789',
             });
         });
+        // prueba 5: PUT /products/:id
+    test('PUT /products/:id status 200', async () => {
+        // ARRANGE
+        const productoexistente = {
+            _id: '789',
+            modelo: 'termo',
+            precio: 20000,
+            imagen: 'agenda.png'
+        };
+        const productoactualizado = {
+            ...productoexistente,
+            modelo: 'vaso',
+            precio: 35000
+        };
+
+        modelProducts.findById.mockResolvedValue(productoexistente);
+        modelProducts.findByIdAndUpdate.mockResolvedValue(productoactualizado);
+
+        // ACT
+        const respuesta = await request(servidor)
+            .put('/products/789')
+            .send({ modelo: 'vaso', precio: 35000 });
+
+        // ASSERT
+        expect(respuesta.statusCode).toBe(200);
+        expect(respuesta.body).toEqual({
+            result: 'fine',
+            message: 'product updated successfully',
+            data: productoactualizado
+        });
+    });
+
     });
