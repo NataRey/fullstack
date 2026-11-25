@@ -282,4 +282,44 @@ test('readProductId debe responder result: "mistake" si falla la bd', async () =
     });
 });
 
+// prueba 10 crear producto catch 
+test('createProduct debe responder res mistake', async ()=>{
+    //arrange 
+    const errorSimulado = new Error('fallo al procesar la peticion');
+    uploadSingleImage.mockImplementationOnce(()=>{
+        throw errorSimulado;
     });
+    const sol ={body: {}};
+    const res ={json: jest.fn()};
+    //act
+    await controllerProducts.createPorduct(sol , res);
+    //assert
+
+    expect(res.json).toHaveBeenCalledWith({
+        result: 'mistake',
+        message: 'An error occurred creating the product',
+        data: errorSimulado,
+    });
+});
+
+//prueba 10.1 crear producto catch imagen 
+test('createProduct error al subir imagen', async()=>{
+    //arrange 
+    uploadSingleImage.mockImplementationOnce((sol , res, callback)=>{
+        callback('Archivo demasiado pesado');
+    });
+    const sol ={ body: {}, file: {filename: 'x.jpg'}};
+    const res ={ json: jest.fn()};
+    //act
+    await controllerProducts.createPorduct(sol , res);
+    //assert
+    expect(res.json).toHaveBeenCalledWith({
+        result: 'mistake',
+        message: 'An error occurred while upload the image',
+        data: 'Archivo demasiado pesado',
+    });
+});
+
+
+
+});

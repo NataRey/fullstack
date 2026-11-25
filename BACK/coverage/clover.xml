@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1795559297649" clover="3.2.0">
-  <project timestamp="1795559297650" name="All files">
-    <metrics statements="168" coveredstatements="65" conditionals="81" coveredconditionals="12" methods="23" coveredmethods="6" elements="272" coveredelements="83" complexity="0" loc="168" ncloc="168" packages="5" files="9" classes="9"/>
+<coverage generated="1795564701390" clover="3.2.0">
+  <project timestamp="1795564701391" name="All files">
+    <metrics statements="168" coveredstatements="67" conditionals="81" coveredconditionals="13" methods="23" coveredmethods="6" elements="272" coveredelements="86" complexity="0" loc="168" ncloc="168" packages="5" files="9" classes="9"/>
     <package name="src">
       <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="servidor.js" path="C:\Users\Usuario\OneDrive\Escritorio\fullStack\BACK\src\servidor.js">
@@ -35,7 +35,7 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="127" coveredstatements="39" conditionals="71" coveredconditionals="12" methods="15" coveredmethods="6"/>
+      <metrics statements="127" coveredstatements="41" conditionals="71" coveredconditionals="13" methods="15" coveredmethods="6"/>
       <file name="controllerLogin.js" path="C:\Users\Usuario\OneDrive\Escritorio\fullStack\BACK\src\controllers\controllerLogin.js">
         <metrics statements="17" coveredstatements="1" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
@@ -57,16 +57,16 @@
         <line num="63" count="0" type="stmt"/>
       </file>
       <file name="controllerProducts.js" path="C:\Users\Usuario\OneDrive\Escritorio\fullStack\BACK\src\controllers\controllerProducts.js">
-        <metrics statements="46" coveredstatements="35" conditionals="26" coveredconditionals="12" methods="6" coveredmethods="6"/>
+        <metrics statements="46" coveredstatements="37" conditionals="26" coveredconditionals="13" methods="6" coveredmethods="6"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
         <line num="45" count="3" type="stmt"/>
         <line num="46" count="3" type="stmt"/>
         <line num="48" count="2" type="cond" truecount="1" falsecount="1"/>
